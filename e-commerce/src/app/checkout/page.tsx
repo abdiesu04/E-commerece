@@ -1,13 +1,13 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useCart } from '@/context/CartContext';
 import { toast } from 'react-hot-toast';
 
 export default function CheckoutPage() {
   const router = useRouter();
-  const { cartItems, cartTotal, clearCart } = useCart();
+  const { cartItems, total, clearCart } = useCart();
   const [isProcessing, setIsProcessing] = useState(false);
 
   const [formData, setFormData] = useState({
@@ -21,9 +21,15 @@ export default function CheckoutPage() {
     zipCode: '',
   });
 
+  useEffect(() => {
+    if (!cartItems || cartItems.length === 0) {
+      router.push('/cart');
+    }
+  }, [cartItems, router]);
+
   const shipping = 10;
-  const tax = cartTotal * 0.1;
-  const total = cartTotal + shipping + tax;
+  const tax = total * 0.1;
+  const totalAmount = total + shipping + tax;
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -49,6 +55,7 @@ export default function CheckoutPage() {
       // Simulate successful payment
       toast.success('Payment successful! Thank you for your order.');
       clearCart();
+      sessionStorage.setItem('orderCompleted', 'true');
       router.push('/thank-you');
     } catch (error) {
       toast.error('Something went wrong. Please try again.');
@@ -57,8 +64,7 @@ export default function CheckoutPage() {
     }
   };
 
-  if (cartItems.length === 0) {
-    router.push('/cart');
+  if (!cartItems || cartItems.length === 0) {
     return null;
   }
 
@@ -203,7 +209,7 @@ export default function CheckoutPage() {
                 <div className="border-t pt-4 mt-4">
                   <div className="flex justify-between mb-2">
                     <span>Subtotal</span>
-                    <span>${cartTotal.toFixed(2)}</span>
+                    <span>${total.toFixed(2)}</span>
                   </div>
                   <div className="flex justify-between mb-2">
                     <span>Shipping</span>
@@ -215,7 +221,7 @@ export default function CheckoutPage() {
                   </div>
                   <div className="flex justify-between font-semibold text-lg border-t pt-4">
                     <span>Total</span>
-                    <span>${total.toFixed(2)}</span>
+                    <span>${totalAmount.toFixed(2)}</span>
                   </div>
                 </div>
               </div>

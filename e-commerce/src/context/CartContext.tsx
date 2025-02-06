@@ -6,101 +6,116 @@ import {
   useState,
   useEffect,
   ReactNode,
+  useCallback,
 } from 'react';
 import { toast } from 'react-hot-toast';
 
-interface CartItem {
+interface Product {
   id: number;
   name: string;
   price: number;
   image: string;
+  category: string;
+  description: string;
+  brand: string;
+  features?: string[];
+}
+
+interface CartItem extends Product {
   quantity: number;
 }
 
 interface CartContextType {
   cartItems: CartItem[];
-  addToCart: (item: Omit<CartItem, 'quantity'>) => void;
-  removeFromCart: (itemId: number) => void;
-  updateQuantity: (itemId: number, quantity: number) => void;
+  addToCart: (product: Product) => void;
+  removeFromCart: (productId: number) => void;
+  updateQuantity: (productId: number, quantity: number) => void;
   clearCart: () => void;
   cartCount: number;
-  cartTotal: number;
+  total: number;
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
 export function CartProvider({ children }: { children: ReactNode }) {
-  const [cartItems, setCartItems] = useState<CartItem[]>([]);
-  const [isInitialized, setIsInitialized] = useState(false);
-
-  // Load cart from session storage on mount
-  useEffect(() => {
-    const savedCart = sessionStorage.getItem('cart');
-    if (savedCart) {
-      setCartItems(JSON.parse(savedCart));
+  const [cartItems, setCartItems] = useState<CartItem[]>(() => {
+    if (typeof window !== 'undefined') {
+      const savedCart = localStorage.getItem('cart');
+      return savedCart ? JSON.parse(savedCart) : [];
     }
-    setIsInitialized(true);
-  }, []);
+    return [];
+  });
 
-  // Save cart to session storage whenever it changes
+  const [cartCount, setCartCount] = useState(0);
+  const [total, setTotal] = useState(0);
+
+  // Calculate totals whenever cart items change
   useEffect(() => {
-    if (isInitialized) {
-      sessionStorage.setItem('cart', JSON.stringify(cartItems));
-    }
-  }, [cartItems, isInitialized]);
+    const count = cartItems.reduce((sum, item) => sum + item.quantity, 0);
+    const newTotal = cartItems.reduce(
+      (sum, item) => sum + (item.price * item.quantity),
+      0
+    );
+    
+    setCartCount(count);
+    setTotal(newTotal);
 
-  const addToCart = (item: Omit<CartItem, 'quantity'>) => {
+    // Save to localStorage
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('cart', JSON.stringify(cartItems));
+    }
+  }, [cartItems]);
+
+  const addToCart = useCallback((product: Product) => {
     setCartItems((prevItems) => {
-      const existingItem = prevItems.find((i) => i.id === item.id);
+      const existingItem = prevItems.find((item) => item.id === product.id);
       if (existingItem) {
         toast.success('Item quantity updated in cart');
-        return prevItems.map((i) =>
-          i.id === item.id ? { ...i, quantity: i.quantity + 1 } : i
+        return prevItems.map((item) =>
+          item.id === product.id
+            ? { ...item, quantity: item.quantity + 1 }
+            : item
         );
       }
       toast.success('Item added to cart');
-      return [...prevItems, { ...item, quantity: 1 }];
+      return [...prevItems, { ...product, quantity: 1 }];
     });
-  };
+  }, []);
 
-  const removeFromCart = (itemId: number) => {
-    setCartItems((prevItems) => prevItems.filter((item) => item.id !== itemId));
+  const removeFromCart = useCallback((productId: number) => {
+    setCartItems((prevItems) => prevItems.filter((item) => item.id !== productId));
     toast.success('Item removed from cart');
-  };
+  }, []);
 
-  const updateQuantity = (itemId: number, quantity: number) => {
-    if (quantity < 1) return;
+  const updateQuantity = useCallback((productId: number, quantity: number) => {
+    if (quantity < 1) {
+      removeFromCart(productId);
+      return;
+    }
     setCartItems((prevItems) =>
       prevItems.map((item) =>
-        item.id === itemId ? { ...item, quantity } : item
+        item.id === productId ? { ...item, quantity } : item
       )
     );
-  };
+  }, [removeFromCart]);
 
-  const clearCart = () => {
+  const clearCart = useCallback(() => {
     setCartItems([]);
     toast.success('Cart cleared');
+  }, []);
+
+  const value = {
+    cartItems,
+    addToCart,
+    removeFromCart,
+    updateQuantity,
+    clearCart,
+    cartCount,
+    total,
   };
 
-  const cartCount = cartItems.reduce((sum, item) => sum + item.quantity, 0);
-
-  const cartTotal = cartItems.reduce(
-    (sum, item) => sum + item.price * item.quantity,
-    0
-  );
-
   return (
-    <CartContext.Provider
-      value={{
-        cartItems,
-        addToCart,
-        removeFromCart,
-        updateQuantity,
-        clearCart,
-        cartCount,
-        cartTotal,
-      }}
-    >
+    <CartContext.Provider value={value}>
       {children}
     </CartContext.Provider>
   );

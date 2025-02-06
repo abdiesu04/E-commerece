@@ -6,7 +6,7 @@ import { useCart } from '@/context/CartContext';
 import { usePathname, useRouter } from 'next/navigation';
 
 export default function FloatingCart() {
-  const { cartCount, cartTotal } = useCart();
+  const { cartCount, total } = useCart();
   const [isVisible, setIsVisible] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false);
   const pathname = usePathname();
@@ -44,7 +44,7 @@ export default function FloatingCart() {
         )}
       </div>
       <div className="pr-2">
-        <div className="text-sm font-semibold">${cartTotal.toFixed(2)}</div>
+        <div className="text-sm font-semibold">${total.toFixed(2)}</div>
         <div className="text-xs opacity-90">View Cart</div>
       </div>
     </button>
