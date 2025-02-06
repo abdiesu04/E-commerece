@@ -8,65 +8,65 @@ export default function Home() {
   return (
     <div className="fade-in">
       {/* Hero Section with Split Design */}
-      <section className="relative min-h-[90vh] flex items-center overflow-hidden">
+      <section className="relative min-h-[70vh] py-16 flex items-center overflow-hidden">
         {/* Left Content */}
-        <div className="absolute inset-0 w-full lg:w-1/2 bg-gradient-to-r from-blue-900 to-blue-800 transform skew-x-6 origin-top-right"></div>
+        <div className="absolute inset-0 w-full lg:w-1/2 bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 transform skew-x-6 origin-top-right"></div>
         <div className="container mx-auto px-4 z-10">
           <div className="grid lg:grid-cols-2 gap-8 items-center">
             {/* Text Content */}
             <div className="text-white relative">
-              <div className="inline-flex items-center bg-white/10 backdrop-blur-lg rounded-full px-4 py-2 mb-6">
-                <AiOutlineThunderbolt className="text-yellow-400 mr-2" />
+              <div className="inline-flex items-center bg-white/10 backdrop-blur-lg rounded-full px-4 py-2 mb-4">
+                <AiOutlineThunderbolt className="text-amber-400 mr-2" />
                 <span className="text-sm">ሃሙስ ገብያ | Hamus Gebiya</span>
               </div>
-              <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight animate-fade-in-up">
-                የ<span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-pink-400">ሃሙስ ገብያ</span><br />
+              <h1 className="text-4xl md:text-6xl font-bold mb-4 leading-tight animate-fade-in-up">
+                የ<span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-rose-400">ሃሙስ ገብያ</span><br />
                 Market
               </h1>
-              <p className="text-xl mb-8 text-gray-100 animate-fade-in-up-delayed">
+              <p className="text-lg mb-6 text-gray-100 animate-fade-in-up-delayed">
                 Quality products at your fingertips.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 animate-fade-in-up-delayed-2">
                 <Link
                   href="/shop"
-                  className="inline-flex items-center bg-white text-blue-900 px-8 py-4 rounded-full font-semibold hover:bg-gray-100 transition-all transform hover:scale-105 shadow-lg"
+                  className="inline-flex items-center bg-amber-400 text-gray-900 px-6 py-3 rounded-full font-semibold hover:bg-amber-300 transition-all transform hover:scale-105 shadow-lg"
                 >
                   Shop Now
                   <FiArrowRight className="ml-2 h-5 w-5" />
                 </Link>
                 <Link
                   href="/categories"
-                  className="inline-flex items-center bg-blue-800/50 backdrop-blur-lg text-white px-8 py-4 rounded-full font-semibold hover:bg-blue-800/70 transition-all"
+                  className="inline-flex items-center bg-gray-800/50 backdrop-blur-lg text-white px-6 py-3 rounded-full font-semibold hover:bg-gray-800/70 transition-all"
                 >
                   Categories
                 </Link>
               </div>
               
               {/* Stats */}
-              <div className="grid grid-cols-3 gap-8 mt-16 animate-fade-in-up-delayed-3">
+              <div className="grid grid-cols-3 gap-6 mt-12 animate-fade-in-up-delayed-3">
                 <div className="text-center">
-                  <div className="text-3xl font-bold">10k+</div>
-                  <div className="text-sm text-gray-300">Local Products</div>
+                  <div className="text-2xl font-bold">10k+</div>
+                  <div className="text-xs text-gray-300">Local Products</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-3xl font-bold">50k+</div>
-                  <div className="text-sm text-gray-300">Happy Customers</div>
+                  <div className="text-2xl font-bold">50k+</div>
+                  <div className="text-xs text-gray-300">Happy Customers</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-3xl font-bold">100%</div>
-                  <div className="text-sm text-gray-300">Authentic</div>
+                  <div className="text-2xl font-bold">100%</div>
+                  <div className="text-xs text-gray-300">Authentic</div>
                 </div>
               </div>
             </div>
 
             {/* Hero Images */}
-            <div className="relative h-[600px] hidden lg:block">
+            <div className="relative h-[450px] hidden lg:block">
               <div className="absolute inset-0 flex items-center justify-center">
                 <div className="relative w-full h-full">
                   {/* Main Hero Image */}
                   <div className="absolute top-0 right-0 w-4/5 h-4/5 rounded-2xl overflow-hidden shadow-2xl transform hover:scale-105 transition-transform duration-500">
                     <Image
-                      src="https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?auto=format&fit=crop&q=80"
+                      src="https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?auto=format&fit=crop&q=80"
                       alt="Premium Shopping Experience"
                       fill
                       className="object-cover"
@@ -76,7 +76,7 @@ export default function Home() {
                   {/* Floating Image 1 */}
                   <div className="absolute bottom-20 -left-10 w-2/5 h-2/5 rounded-xl overflow-hidden shadow-xl animate-float">
                     <Image
-                      src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&q=80"
+                      src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&q=80"
                       alt="Premium Products"
                       fill
                       className="object-cover"
@@ -86,7 +86,7 @@ export default function Home() {
                   {/* Floating Image 2 */}
                   <div className="absolute top-20 -left-5 w-2/5 h-2/5 rounded-xl overflow-hidden shadow-xl animate-float-delayed">
                     <Image
-                      src="https://images.unsplash.com/photo-1491553895911-0055eca6402d?auto=format&fit=crop&q=80"
+                      src="https://images.unsplash.com/photo-1511385348-a52b4a160dc2?auto=format&fit=crop&q=80"
                       alt="Luxury Products"
                       fill
                       className="object-cover"
@@ -106,7 +106,7 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             <div className="relative h-40 rounded-xl overflow-hidden group">
               <Image
-                src="https://images.unsplash.com/photo-1468495244123-6c6c332eeece?auto=format&fit=crop&q=80"
+                src="https://images.unsplash.com/photo-1498049794561-7780e7231661?auto=format&fit=crop&q=80"
                 alt="Electronics"
                 fill
                 className="object-cover transform group-hover:scale-110 transition-transform duration-500"
@@ -231,7 +231,7 @@ export default function Home() {
       </section>
 
       {/* Newsletter Section */}
-      <section className="py-20 bg-gradient-to-r from-blue-900 to-blue-800 relative overflow-hidden">
+      <section className="py-20 bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 relative overflow-hidden">
         <div className="absolute inset-0">
           <div className="absolute w-96 h-96 bg-white/10 rounded-full -top-20 -left-20 animate-float"></div>
           <div className="absolute w-72 h-72 bg-white/10 rounded-full bottom-20 right-20 animate-float-delayed"></div>
@@ -241,16 +241,16 @@ export default function Home() {
             <h2 className="text-3xl font-bold text-white mb-4">
               Stay Updated with Latest Offers
             </h2>
-            <p className="text-blue-100 mb-8">
+            <p className="text-gray-200 mb-8">
               Subscribe to our newsletter and get exclusive deals on traditional and modern products.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
               <input
                 type="email"
                 placeholder="Enter your email"
-                className="flex-1 px-6 py-4 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-400"
+                className="flex-1 px-6 py-4 rounded-full focus:outline-none focus:ring-2 focus:ring-amber-400"
               />
-              <button className="bg-yellow-500 text-blue-900 px-8 py-4 rounded-full hover:bg-yellow-400 transition-colors transform hover:scale-105 font-semibold">
+              <button className="bg-amber-400 text-gray-900 px-8 py-4 rounded-full hover:bg-amber-300 transition-colors transform hover:scale-105 font-semibold">
                 Subscribe
               </button>
             </div>
